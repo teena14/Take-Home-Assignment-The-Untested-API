@@ -1,5 +1,6 @@
-const express = require('express');
-const taskRoutes = require('./routes/tasks');
+import express from 'express';
+import taskRoutes from './routes/tasks.js';
+import { fileURLToPath } from 'url';
 
 const app = express();
 
@@ -13,10 +14,10 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   app.listen(PORT, () => {
     console.log(`Task API running on port ${PORT}`);
   });
 }
 
-module.exports = app;
+export default app;

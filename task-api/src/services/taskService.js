@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
 
 let tasks = [];
 
@@ -89,7 +89,7 @@ const _reset = () => {
   tasks = [];
 };
 
-module.exports = {
+export {
   getAll,
   findById,
   getByStatus,

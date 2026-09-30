@@ -1,32 +1,7 @@
-'use strict';
-
-/**
- * Integration tests for API routes (src/routes/tasks.js)
- *
- * Uses supertest to make real HTTP calls against the Express app.
- * The service's _reset() is called in beforeEach so every test
- * starts with an empty in-memory store.
- *
- * Three deliberate failure-mode tests (marked ⚠️) are written
- * against the CORRECT expected HTTP behaviour. They will fail
- * against the current implementation and drive the route fixes.
- *
- *   FM-A  GET /tasks?status=<invalid>
- *         Route passes any string to getByStatus without validating it
- *         against allowed values → returns 200+[] instead of 400.
- *
- *   FM-B  PUT /tasks/:id with {"id": "hacked", "title": "valid"}
- *         The route spreads the entire body onto the task, so the
- *         caller can overwrite the task's own id.
- *
- *   FM-C  GET /tasks?status=todo&page=1&limit=2
- *         The route short-circuits on `status` and returns ALL
- *         matching tasks, ignoring the pagination params entirely.
- */
-
-const request = require('supertest');
-const app = require('../src/app');
-const taskService = require('../src/services/taskService');
+import request from 'supertest';
+import app from '../src/app.js';
+import * as taskService from '../src/services/taskService.js';
+import { validateCreateTask, validateUpdateTask } from '../src/utils/validators.js';
 
 // Reset in-memory store before every test
 beforeEach(() => {

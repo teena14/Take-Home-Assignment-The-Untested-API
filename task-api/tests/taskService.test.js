@@ -1,31 +1,6 @@
-'use strict';
+import * as svc from '../src/services/taskService.js';
+import { validateCreateTask, validateUpdateTask } from '../src/utils/validators.js';
 
-/**
- * Unit tests for src/services/taskService.js
- *
- * Strategy
- * --------
- * Each describe block owns one exported function.
- * beforeEach calls _reset() so tests never share state.
- *
- * Three deliberate failure-mode tests (marked ⚠️) are written
- * against the CORRECT expected behaviour. They will fail against
- * the current implementation and drive the fixes in taskService.js.
- *
- *   FM-1  getPaginated  – off-by-one: offset formula uses page*limit
- *                         instead of (page-1)*limit
- *   FM-2  getByStatus   – substring match: .includes(status) on the
- *                         status string instead of strict ===
- *   FM-3  completeTask  – silently resets priority to 'medium'
- */
-
-const svc = require('../src/services/taskService');
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Helpers
-// ─────────────────────────────────────────────────────────────────────────────
-
-/** Quickly create a task and return it. */
 const makeTask = (overrides = {}) =>
   svc.create({ title: 'Test task', ...overrides });
 
@@ -372,8 +347,6 @@ describe('getStats', () => {
  * skips the check, allowing an empty-string status/priority to be stored.
  */
 describe('BUG-7 regression – validators.js empty-string bypass', () => {
-  const { validateCreateTask, validateUpdateTask } = require('../src/utils/validators');
-
   describe('validateCreateTask', () => {
     test('rejects status: "" with a validation error', () => {
       const error = validateCreateTask({ title: 'X', status: '' });

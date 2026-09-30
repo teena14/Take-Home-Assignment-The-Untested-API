@@ -53,4 +53,4 @@ const validateAssignee = (body) => {
   return null;
 };
 
-module.exports = { validateCreateTask, validateUpdateTask, validateStatus, validateAssignee };
+export { validateCreateTask, validateUpdateTask, validateStatus, validateAssignee };

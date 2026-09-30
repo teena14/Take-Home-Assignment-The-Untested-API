@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const taskService = require('../services/taskService');
-const { validateCreateTask, validateUpdateTask, validateStatus, validateAssignee } = require('../utils/validators');
+import * as taskService from '../services/taskService.js';
+import { validateCreateTask, validateUpdateTask, validateStatus, validateAssignee } from '../utils/validators.js';
 
 // Immutable task fields that callers must never be able to overwrite via PUT.
 const IMMUTABLE_FIELDS = ['id', 'createdAt'];
@@ -105,4 +105,4 @@ router.patch('/:id/assign', (req, res) => {
   res.json(task);
 });
 
-module.exports = router;
+export default router;
